@@ -118,6 +118,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  //Builder Widget Below
+
   Widget textBody(String txt){
     final ThemeData themeData = Theme.of(context);
     return Padding(
