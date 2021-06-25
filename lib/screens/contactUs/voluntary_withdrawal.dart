@@ -6,12 +6,12 @@ import 'package:healthensuite/models/icon_button.dart';
 
 class VoluntaryWithdrawal extends StatelessWidget{
 
-  final Function onMenuTap;
+  final Function? onMenuTap;
     static final String title = 'Voluntary Withdrawal';
     static final sidePad = EdgeInsets.symmetric(horizontal: 18);
 
 
-  const VoluntaryWithdrawal({Key key, this.onMenuTap}) : super(key: key);
+  const VoluntaryWithdrawal({Key? key, this.onMenuTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

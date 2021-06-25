@@ -12,14 +12,14 @@ import 'package:healthensuite/screens/sleepDiary/sleep_diary.dart';
 import 'package:healthensuite/screens/sleepClock/sleep_clock.dart';
 import 'package:healthensuite/screens/sleepReport/sleep_report.dart';
 
-var indexClicked = 0;
+int? indexClicked = 0;
 final name = 'Ifeanyi Paul';
 final email = 'mail@mail.com';
 final assetImage ='assets/images/form-user.jpg';
 
 class NavigationDrawerWidget extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
-  final int indexNum;
+  final int? indexNum;
 
   NavigationDrawerWidget({this. indexNum});
 
@@ -117,10 +117,10 @@ class NavigationDrawerWidget extends StatelessWidget {
   //Builder Widget Below
 
   Widget buildHeader({
-    @required String assetImage,
-    @required String name,
-    @required String email,
-    @required VoidCallback onClicked,
+    required String assetImage,
+    required String name,
+    required String email,
+    required VoidCallback onClicked,
   }) =>
       InkWell(
         onTap: onClicked,
@@ -152,9 +152,9 @@ class NavigationDrawerWidget extends StatelessWidget {
 
 
   Widget buildMenuItem({
-    @required String text,
-    @required IconData icon,
-    VoidCallback onClicked,
+    required String text,
+    required IconData icon,
+    VoidCallback? onClicked,
   }) {
     final color = Colors.white;
     final hoverColor = Colors.white70;
@@ -233,9 +233,9 @@ class NavigationDrawerWidget extends StatelessWidget {
 
 class MenuItem extends StatelessWidget {
   const MenuItem({
-    Key key,
-    @required this.index,
-    @required this.onClicked
+    Key? key,
+    required this.index,
+    required this.onClicked
   }) : super(key: key);
 
   final int index;

@@ -4,20 +4,20 @@ import 'package:healthensuite/utilities/constants.dart';
 import 'package:healthensuite/models/icon_button.dart';
 
 class MyChoice{
-  String choice;
-  int index;
+  String? choice;
+  int? index;
   MyChoice({this.choice, this.index});
 }
 
 
 class MyFeedback extends StatefulWidget{
 
-  final Function onMenuTap;
+  final Function? onMenuTap;
 
   static final String title = 'My Feedback';
   static final sidePad = EdgeInsets.symmetric(horizontal: 18);
 
-  const MyFeedback({Key key, this.onMenuTap}) : super(key: key);
+  const MyFeedback({Key? key, this.onMenuTap}) : super(key: key);
 
   @override
   _MyFeedbackState createState() => _MyFeedbackState();
@@ -98,8 +98,8 @@ class RadioGroup extends StatefulWidget {
 }
 
 class _RadioGroupState extends State<RadioGroup> {
-  String defaultChoice = "Happy";
-    int defaultIndex = 0; 
+  String? defaultChoice = "Happy";
+    int? defaultIndex = 0; 
 
     List<MyChoice> choices = [
       MyChoice(index: 0, choice: "Happy"),
@@ -121,7 +121,7 @@ class _RadioGroupState extends State<RadioGroup> {
                   title: Text('${data.choice}'),
                   groupValue: defaultIndex,
                   value: data.index,
-                  onChanged: (value){
+                  onChanged: (dynamic value){
                     setState(() {
                         defaultChoice = data.choice; 
                         defaultIndex = data.index; 

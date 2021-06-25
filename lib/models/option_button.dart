@@ -5,9 +5,9 @@ class OptionButton extends StatelessWidget {
   final String text;
   final IconData icon;
   final double width;
-  final Function buttonEvent;
+  final Function? buttonEvent;
 
-  const OptionButton({Key key, @required this.text, @required this.icon, @required this.width, this.buttonEvent}) : super(key: key);
+  const OptionButton({Key? key, required this.text, required this.icon, required this.width, this.buttonEvent}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class OptionButton extends StatelessWidget {
           splashColor: Colors.white.withAlpha(55),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-          onPressed: buttonEvent,
+          onPressed: buttonEvent as void Function()?,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [

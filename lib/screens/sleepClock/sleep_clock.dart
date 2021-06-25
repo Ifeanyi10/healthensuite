@@ -5,10 +5,10 @@ import 'package:healthensuite/utilities/drawer_navigation.dart';
 
 class SleepClock extends StatelessWidget {
 
-  final Function onMenuTap;
+  final Function? onMenuTap;
   static final String title = 'Sleep Clock';
 
-  const SleepClock({Key key, this.onMenuTap}) : super(key: key);
+  const SleepClock({Key? key, this.onMenuTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -36,7 +36,7 @@ final kBoxDecorationStyle = BoxDecoration(
   ],
 );
 
-final Color appBackgroundColor = Colors.blue[400];
+final Color? appBackgroundColor = Colors.blue[400];
 final MaterialColor appBackgroundMaterialColor = Colors.blue;
 const COLOR_DARK_BLUE = Color.fromRGBO(13, 53, 78, 1.0);
 const COLOR_BLACK = Color.fromRGBO(48, 47, 48, 1.0);

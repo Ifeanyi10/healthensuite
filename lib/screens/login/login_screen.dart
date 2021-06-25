@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:healthensuite/api/network.dart';
+import 'package:healthensuite/api/networkmodels/loginPodo.dart';
+import 'package:healthensuite/screens/home/home_screen.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
-import 'package:healthensuite/screens/profile/profile_screen.dart';
 import 'package:healthensuite/utilities/constants.dart';
 import 'package:healthensuite/models/background.dart';
 import 'forgot_password.dart';
@@ -14,7 +16,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _rememberMe = false;
+  bool? _rememberMe = false;
+
+  TextEditingController usernamecontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
+
+  Future<LoginPodo>? _logindetailFuture;
+  LoginPodo? loginDetail;
 
   getData() async{
 
@@ -26,16 +34,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   }
 
-  initializeLogin() async{
-    var url = Uri.parse("http://health001-env.eba-v5mudubf.us-east-2.elasticbeanstalk.com/insomnia/v1/authentication/login");
-    var username = "ifeanyiodenigbo10@gmail.com";
-    var password = "Pass@123";
-    var response = await post(url, body: {"password": password, "username": username});
-    //print('Response status: ${response.statusCode}');
-    print('Login Token: ${response.body}');
-
-    //print(await read(Uri.parse('https://example.com/foobar.txt')));
-  }
+  // initializeLogin() async{
+  //   var url = Uri.parse("http://health001-env.eba-v5mudubf.us-east-2.elasticbeanstalk.com/insomnia/v1/authentication/login");
+  //   var username = "ifeanyiodenigbo10@gmail.com";
+  //   var password = "Pass@123";
+  //   var response = await post(url, body: {"password": password, "username": username});
+  //   //print('Response status: ${response.statusCode}');
+  //   print('Login Token: ${response.body}');
+  //
+  //   //print(await read(Uri.parse('https://example.com/foobar.txt')));
+  // }
 
   @override
   void initState(){
@@ -73,6 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
               hintText: 'Enter your Username',
               hintStyle: kHintTextStyle,
             ),
+            controller: usernamecontroller,
           ),
         ),
       ],
@@ -108,6 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
               hintText: 'Enter your Password',
               hintStyle: kHintTextStyle,
             ),
+            controller: passwordcontroller,
           ),
         ),
       ],
@@ -172,9 +182,20 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         //onPressed: () => print('Login Button Pressed'),
-        onPressed: ()  {Navigator.push(
-          context, new MaterialPageRoute(builder: (context) => PatientScreen())
-          );},
+        onPressed: ()  {
+          String un = usernamecontroller.value.text.trim();
+          String pass = passwordcontroller.value.text.trim();
+          _logindetailFuture =  ApiAccess().login(username: un, password: pass);
+          _logindetailFuture!.then((value) => {
+           // loginDetail = value
+          if(value == null){
+              showAlertDialog(context)
+               }else{
+          // Navigator.push(
+          // context, new MaterialPageRoute(builder: (context) => HomeScreen()))
+                }
+          } );
+          },
         child: Text(
           'LOGIN',
           style: TextStyle(
@@ -186,6 +207,32 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () { },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("My title"),
+      content: Text("This is my message."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 

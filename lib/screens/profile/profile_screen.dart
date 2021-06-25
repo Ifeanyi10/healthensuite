@@ -10,13 +10,13 @@ import 'patient_name.dart';
 
 class PatientScreen extends StatelessWidget{
 
-  final Function onMenuTap;
-  final String name;
-  final String email;
+  final Function? onMenuTap;
+  final String? name;
+  final String? email;
 
   static final String title = 'My Profile';
 
-  const PatientScreen({Key key, this.onMenuTap, this.email, this.name}) : super(key: key);
+  const PatientScreen({Key? key, this.onMenuTap, this.email, this.name}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -5,10 +5,10 @@ import 'package:healthensuite/utilities/drawer_navigation.dart';
 
 class ProgramContent extends StatelessWidget{
 
-  final Function onMenuTap;
+  final Function? onMenuTap;
    static final String title = 'Program Content';
 
-  const ProgramContent({Key key, this.onMenuTap}) : super(key: key);
+  const ProgramContent({Key? key, this.onMenuTap}) : super(key: key);
 
    @override
   Widget build(BuildContext context) {
