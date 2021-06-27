@@ -1,22 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:healthensuite/api/network.dart';
+import 'package:healthensuite/api/networkmodels/patientProfilePodo.dart';
 //import 'package:intl/intl.dart';
 import 'package:healthensuite/models/icon_button.dart';
+import 'package:healthensuite/statemanagement/behaviourlogic.dart';
 import 'package:healthensuite/utilities/constants.dart';
 //import 'package:healthensuite/utilities/drawer_navigation.dart';
 //import 'package:healthensuite/utilities/constants.dart';
 
 
-class SleepDiary extends StatelessWidget {
-
+// ignore: must_be_immutable
+class SleepDiary extends StatefulWidget {
   final Function? onMenuTap;
   static final String title = 'Sleep Diary';
+  SleepDiariesPODO sleepDiariesPODO;
+
+
+  SleepDiary({Key? key, this.onMenuTap, required this.sleepDiariesPODO}) : super(key: key);
+
+  @override
+  _SleepDiaryState createState() => _SleepDiaryState();
+}
+
+class _SleepDiaryState extends State<SleepDiary> {
   final _formKey = GlobalKey<FormBuilderState>();
+
   TimeOfDay? time;
 
-  SleepDiary({Key? key, this.onMenuTap}) : super(key: key);
-  
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -28,10 +40,12 @@ class SleepDiary extends StatelessWidget {
     List<String> hours = generateNumbers(23);
     List<String> minutes = generateNumbers(59);
 
+    String date = Workflow().convertDatetime2date(widget.sleepDiariesPODO.dateCreated.toString());
+
     return Scaffold(
       //drawer: NavigationDrawerWidget(indexNum: 2,),
       appBar: AppBar(
-        title: Text(title),
+        title: Text(SleepDiary.title),
         centerTitle: true,
       ),
       body: FormBuilder(
@@ -47,7 +61,7 @@ class SleepDiary extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: Padding(
                   padding: sidePad,
-                  child: Text('2020-05-30',
+                  child: Text(date,
                   textAlign: TextAlign.right,
                   style: themeData.textTheme.headline4,),
                 ),
@@ -70,19 +84,19 @@ class SleepDiary extends StatelessWidget {
 
                       SizedBox(height: pad,),
 
-                      hourMinute(sidePad, themeData, hours, minutes, 
-                        question: "How long did it take you to fall asleep? (Please select hour then minute)", 
+                      hourMinute(sidePad, themeData, hours, minutes,
+                        question: "How long did it take you to fall asleep? (Please select hour then minute)",
                         hrValName: "hrs1", mnValName: "mns1"),
 
                       SizedBox(height: pad,),
 
-                      numberInput(sidePad, themeData, 
+                      numberInput(sidePad, themeData,
                         question: "How many times did you wake up, not counting your final awakening?", valName: "wakeTimes"),
 
                       SizedBox(height: pad,),
 
-                      hourMinute(sidePad, themeData, hours, minutes, 
-                        question: "In total, how long did these awakenings last? (Please select hour then minute)", 
+                      hourMinute(sidePad, themeData, hours, minutes,
+                        question: "In total, how long did these awakenings last? (Please select hour then minute)",
                         hrValName: "hrs2", mnValName: "mns2"),
 
                       SizedBox(height: pad,),
@@ -99,12 +113,12 @@ class SleepDiary extends StatelessWidget {
 
                       SizedBox(height: pad,),
 
-                      drugNumberInput(sidePad, themeData, 
+                      drugNumberInput(sidePad, themeData,
                         question: "How much $drug1 did you take today?", valName: "drNum1"),
 
                       SizedBox(height: pad,),
 
-                      drugNumberInput(sidePad, themeData, 
+                      drugNumberInput(sidePad, themeData,
                         question: "How much $drug2 did you take today?", valName: "drNum2"),
 
                       SizedBox(height: pad,),
@@ -113,12 +127,12 @@ class SleepDiary extends StatelessWidget {
 
                       SizedBox(height: pad,),
 
-                      normalTextInput(sidePad, themeData, 
+                      normalTextInput(sidePad, themeData,
                         question: "Enter the medication name", valName: "medName1"),
 
                       SizedBox(height: pad,),
 
-                      drugNumberInput(sidePad, themeData, 
+                      drugNumberInput(sidePad, themeData,
                         question: "Enter the amount taken", valName: "amTaken1"),
 
                       SizedBox(height: pad,),
@@ -130,7 +144,9 @@ class SleepDiary extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          IconUserButton(buttonText: "Submit", buttonEvent: () {validateForm(_formKey);}, buttonIcon: Icons.arrow_forward,),
+                          IconUserButton(buttonText: "Submit", buttonEvent: () {
+                            validateForm(_formKey);
+                            }, buttonIcon: Icons.arrow_forward,),
                           IconUserButton(buttonText: "Cancel", buttonEvent: () {}, buttonIcon: Icons.cancel)
                         ],
                       ),
@@ -143,12 +159,9 @@ class SleepDiary extends StatelessWidget {
           ),
         ),
         onChanged: () => print("Form has changed"),
-      ), 
+      ),
     );
   }
-
-
-  //Builder Widget below
 
   Padding switchToMoreDrug(EdgeInsets sidePad, ThemeData themeData) {
     return Padding(
@@ -299,7 +312,7 @@ class SleepDiary extends StatelessWidget {
                   Text('Please rate the overall quality of your sleep:',
                   style: themeData.textTheme.headline5,),
                   FormBuilderChoiceChip(
-                    name: "spQuality", 
+                    name: "spQuality",
                     alignment: WrapAlignment.spaceEvenly,
                     spacing: 4,
                     // decoration: InputDecoration(
@@ -344,7 +357,7 @@ class SleepDiary extends StatelessWidget {
                       ),
                     ],
                   ),
-                  
+
                 ],
               ),
             );
@@ -365,7 +378,7 @@ class SleepDiary extends StatelessWidget {
   }
 
   String getText(GlobalKey<FormBuilderState> key, TimeOfDay? time, String valName) {
-    String timeVal = "Select Time";    
+    String timeVal = "Select Time";
     if (time == null) {
       return timeVal;
     } else {
@@ -382,8 +395,44 @@ class SleepDiary extends StatelessWidget {
           //key.currentState.save();
           print(key.currentState!.value);
           //key.currentState.reset();
-          String? myVal = key.currentState!.fields["spQuality"]!.value;
-          print("Its value: $myVal");
+        //  String? myVal = key.currentState!.fields["spQuality"]!.value;
+          String bedTime = key.currentState!.fields["inBed"]!.value;
+          String tryTosleepTime = key.currentState!.fields["tryBed"]!.value;
+          //"How long did it take you to fall asleep?"
+          String durationBeforesleepoff_HOUR = key.currentState!.fields["hrs1"]!.value;
+          String durationBeforesleepoff_MINUTES = key.currentState!.fields["mns1"]!.value;
+          double durationB4sleep = double.parse(durationBeforesleepoff_HOUR + "." + durationBeforesleepoff_MINUTES);
+          // "In total, how long did these awakenings last?"
+          String totalWakeUpduration_HOUR = key.currentState!.fields["hrs2"]!.value;
+          String totalWakeUpduration_MINUTE = key.currentState!.fields["mns2"]!.value;
+          double awakeningDurations = double.parse(totalWakeUpduration_HOUR + "." + totalWakeUpduration_MINUTE);
+          // "Sleep quality"
+          String sleepQuality = key.currentState!.fields["spQuality"]!.value;
+
+          int wakeUptimeCount = int.parse(key.currentState!.fields["wakeTimes"]!.value);
+
+          String finalWakeupTime = key.currentState!.fields["finAwake"]!.value;
+          String timeLeftbed = key.currentState!.fields["outBed"]!.value;
+
+          String currentmedication_amount1 = key.currentState!.fields["drNum1"]!.value;
+          String currentmedication_amount2 = key.currentState!.fields["drNum2"]!.value;
+
+          String newMedname = key.currentState!.fields["medName1"]!.value;
+          String newMedamount = key.currentState!.fields["amTaken1"]!.value;
+
+          String otherThings = key.currentState!.fields["otherNote"]!.value;
+
+
+           widget.sleepDiariesPODO.updateVariable(bedTime, tryTosleepTime, durationB4sleep,
+              wakeUptimeCount, awakeningDurations, finalWakeupTime, timeLeftbed, sleepQuality, otherThings);
+
+          ApiAccess().saveSleepDiaries(sleepDiary: widget.sleepDiariesPODO);
+
+          print("Bed : $bedTime , Try to wake up : $tryTosleepTime , "
+              "Sleep Quality : $sleepQuality , Wake up count : $wakeUptimeCount , Final Wake up : $finalWakeupTime ,"
+              "Time Left Bed : $timeLeftbed , Current Med 1 Amount : $currentmedication_amount1 , Awakening Duration : $awakeningDurations"
+              "Current Med 2 amount : $currentmedication_amount2 , Duration before sleep $durationB4sleep "
+              "New Med Name : $newMedname , New Med Amount : $newMedamount , Other things : $otherThings");
         }
   }
 
@@ -394,5 +443,4 @@ class SleepDiary extends StatelessWidget {
     }
     return nums;
   }
-
 }

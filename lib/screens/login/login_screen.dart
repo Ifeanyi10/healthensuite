@@ -24,6 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<LoginPodo>? _logindetailFuture;
   LoginPodo? loginDetail;
 
+  bool isLoading = false;
   getData() async{
 
     Uri url = Uri.parse("https://jsonplaceholder.typicode.com/todos/1");
@@ -181,21 +182,27 @@ class _LoginScreenState extends State<LoginScreen> {
           borderRadius: BorderRadius.circular(30.0),
           ),
         ),
-        //onPressed: () => print('Login Button Pressed'),
+          //onPressed: () => print('Login Button Pressed'),
         onPressed: ()  {
+
           String un = usernamecontroller.value.text.trim();
           String pass = passwordcontroller.value.text.trim();
           _logindetailFuture =  ApiAccess().login(username: un, password: pass);
+
           _logindetailFuture!.then((value) => {
            // loginDetail = value
           if(value == null){
               showAlertDialog(context)
                }else{
-          // Navigator.push(
-          // context, new MaterialPageRoute(builder: (context) => HomeScreen()))
+          Navigator.push(
+          context, new MaterialPageRoute(builder: (context) => HomeScreen()))
                 }
           } );
+
+
           },
+
+
         child: Text(
           'LOGIN',
           style: TextStyle(
@@ -207,6 +214,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
+
     );
   }
 

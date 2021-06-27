@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:healthensuite/screens/login/login_screen.dart';
 import 'dart:ui';
 import 'package:healthensuite/utilities/constants.dart';
-import 'package:healthensuite/screens/home/home_screen.dart';
 
 
 void main() => runApp(new MyApp());

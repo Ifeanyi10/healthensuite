@@ -12,7 +12,7 @@ class PatientProfilePodo {
   String? tapperStartDate;
   List<Regimen>? regimen;
   StatusEntity? statusEntity;
-  List<SleepDiaries>? sleepDiaries;
+  List<SleepDiariesPODO>? sleepDiaries;
   List<Sleepwindows>? sleepwindows;
   InterventionLevelsEntity? interventionLevelsEntity;
   List<Sharedreports>? sharedreports;
@@ -58,8 +58,8 @@ class PatientProfilePodo {
     //     ? new TapperStartDate.fromJson(json['tapperStartDate'])
     //     : null;
     if (json['regimen'] != null) {
-    //  regimen = new List<Regimen>();
-      regimen;
+        regimen = <Regimen>[];
+     // regimen;
       json['regimen'].forEach((v) {
         regimen!.add(new Regimen.fromJson(v));
       });
@@ -68,15 +68,15 @@ class PatientProfilePodo {
         ? new StatusEntity.fromJson(json['statusEntity'])
         : null;
     if (json['sleepDiaries'] != null) {
-      // sleepDiaries = new List<SleepDiaries>();
-      sleepDiaries;
+       sleepDiaries = <SleepDiariesPODO>[];
+     //  sleepDiaries;
       json['sleepDiaries'].forEach((v) {
-        sleepDiaries!.add(new SleepDiaries.fromJson(v));
+        sleepDiaries!.add(new SleepDiariesPODO.fromJson(v));
       });
     }
     if (json['sleepwindows'] != null) {
-     // sleepwindows = new List<Sleepwindows>();
-      sleepwindows;
+      sleepwindows = <Sleepwindows>[];
+    //  sleepwindows;
       json['sleepwindows'].forEach((v) {
         sleepwindows!.add(new Sleepwindows.fromJson(v));
       });
@@ -86,8 +86,8 @@ class PatientProfilePodo {
         json['interventionLevelsEntity'])
         : null;
     if (json['sharedreports'] != null) {
-      sharedreports;
-     // sharedreports = new List<Sharedreports>();
+      // sharedreports;
+      sharedreports = <Sharedreports>[];
       json['sharedreports'].forEach((v) {
         sharedreports!.add(new Sharedreports.fromJson(v));
       });
@@ -433,22 +433,22 @@ class StatusEntity {
   }
 }
 
-class SleepDiaries {
+class SleepDiariesPODO {
   int? id;
-  BedTime? bedTime;
-  BedTime? tryTosleepTime;
+  String? bedTime;
+  String? tryTosleepTime;
   double? durationBeforesleepoff;
   int? wakeUptimeCount;
   double? totalWakeUpduration;
-  BedTime? finalWakeupTime;
-  BedTime? timeLeftbed;
+  String? finalWakeupTime;
+  String? timeLeftbed;
   String? sleepQuality;
   String? otherThings;
   List<Medications>? medications;
   List<Othermedications>? othermedications;
   String? dateCreated;
 
-  SleepDiaries(
+  SleepDiariesPODO(
       {
         this.id,
         this.bedTime,
@@ -464,34 +464,37 @@ class SleepDiaries {
         this.othermedications,
         this.dateCreated});
 
-  SleepDiaries.fromJson(Map<String, dynamic> json) {
+  SleepDiariesPODO.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    bedTime =
-    json['bedTime'] != null ? new BedTime.fromJson(json['bedTime']) : null;
-    tryTosleepTime = json['tryTosleepTime'] != null
-        ? new BedTime.fromJson(json['tryTosleepTime'])
-        : null;
+    bedTime = json['bedTime'];
+    // bedTime =
+    // json['bedTime'] != null ? new BedTime.fromJson(json['bedTime']) : null;
+    // tryTosleepTime = json['tryTosleepTime'] != null
+    //     ? new BedTime.fromJson(json['tryTosleepTime'])
+    //     : null;
     durationBeforesleepoff = json['durationBeforesleepoff'];
     wakeUptimeCount = json['wakeUptimeCount'];
     totalWakeUpduration = json['totalWakeUpduration'];
-    finalWakeupTime = json['finalWakeupTime'] != null
-        ? new BedTime.fromJson(json['finalWakeupTime'])
-        : null;
-    timeLeftbed = json['timeLeftbed'] != null
-        ? new BedTime.fromJson(json['timeLeftbed'])
-        : null;
+    finalWakeupTime = json['finalWakeupTime'];
+    // finalWakeupTime = json['finalWakeupTime'] != null
+    //     ? new BedTime.fromJson(json['finalWakeupTime'])
+    //     : null;
+    timeLeftbed = json['timeLeftbed'];
+    // timeLeftbed = json['timeLeftbed'] != null
+    //     ? new BedTime.fromJson(json['timeLeftbed'])
+    //     : null;
     sleepQuality = json['sleepQuality'];
     otherThings = json['otherThings'];
     if (json['medications'] != null) {
-   //   medications = new List<Medications>();
-      medications;
+       medications = <Medications>[];
+    //  medications;
       json['medications'].forEach((v) {
         medications!.add(new Medications.fromJson(v));
       });
     }
     if (json['othermedications'] != null) {
-    //  othermedications = new List<Othermedications>();
-      othermedications;
+     othermedications = <Othermedications>[];
+    //  othermedications;
       json['othermedications'].forEach((v) {
         othermedications!.add(new Othermedications.fromJson(v));
       });
@@ -504,22 +507,14 @@ class SleepDiaries {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    //data['id'] = this.id;
-    if (this.bedTime != null) {
-      data['bedTime'] = this.bedTime!.toJson();
-    }
-    if (this.tryTosleepTime != null) {
-      data['tryTosleepTime'] = this.tryTosleepTime!.toJson();
-    }
+    data['id'] = this.id;
+    data['bedTime'] = this.bedTime;
+    data['tryTosleepTime'] = this.tryTosleepTime;
     data['durationBeforesleepoff'] = this.durationBeforesleepoff;
     data['wakeUptimeCount'] = this.wakeUptimeCount;
     data['totalWakeUpduration'] = this.totalWakeUpduration;
-    if (this.finalWakeupTime != null) {
-      data['finalWakeupTime'] = this.finalWakeupTime!.toJson();
-    }
-    if (this.timeLeftbed != null) {
-      data['timeLeftbed'] = this.timeLeftbed!.toJson();
-    }
+    data['finalWakeupTime'] = this.finalWakeupTime;
+    data['timeLeftbed'] = this.timeLeftbed;
     data['sleepQuality'] = this.sleepQuality;
     data['otherThings'] = this.otherThings;
     if (this.medications != null) {
@@ -530,10 +525,21 @@ class SleepDiaries {
           this.othermedications!.map((v) => v.toJson()).toList();
     }
     data['date_Created'] = this.dateCreated;
-    // if (this.dateCreated != null) {
-    //   data['date_Created'] = this.dateCreated!.toJson();
-    // }
     return data;
+  }
+  void updateVariable(String bedTime, String tryTosleepTime, double durationBeforesleepoff, int wakeUptimeCount,
+      double totalWakeUpduration, String finalWakeupTime, String timeLeftbed, String sleepQuality, otherThings
+      ) {
+    this.bedTime = bedTime;
+    this.tryTosleepTime = tryTosleepTime;
+    this.durationBeforesleepoff = durationBeforesleepoff;
+    this.wakeUptimeCount = wakeUptimeCount;
+    this.totalWakeUpduration = totalWakeUpduration;
+    this.finalWakeupTime = finalWakeupTime;
+    this.timeLeftbed = timeLeftbed;
+    this.sleepQuality = sleepQuality;
+    this.otherThings = otherThings;
+
   }
 }
 
@@ -651,12 +657,12 @@ class Sleepwindows {
 class InterventionLevelsEntity {
   int? id;
   int? interventionLevel;
-  Null? levelOneEntity;
-  Null? levelTwoEntity;
-  Null? levelThreeEntity;
-  Null? levelFiveEntity;
-  Null? levelSixEntity;
-  Null? psychoEducationreports;
+  Null levelOneEntity;
+  Null levelTwoEntity;
+  Null levelThreeEntity;
+  Null levelFiveEntity;
+  Null levelSixEntity;
+  Null psychoEducationreports;
   String? dateCreated;
 
   InterventionLevelsEntity(
@@ -786,7 +792,7 @@ class Sharedreports {
 }
 
 class Othermedications {
-  Null? id;
+  int? id;
   String? medicationName;
   double? amount;
   String? dateCreated;

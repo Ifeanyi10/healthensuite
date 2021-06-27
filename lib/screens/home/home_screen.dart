@@ -1,6 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:healthensuite/api/network.dart';
 import 'package:healthensuite/api/networkmodels/patientProfilePodo.dart';
+import 'package:healthensuite/statemanagement/behaviourlogic.dart';
 //import 'package:google_fonts/google_fonts.dart';
 import 'package:healthensuite/utilities/drawer_navigation.dart';
 import 'package:healthensuite/utilities/text_data.dart';
@@ -45,13 +47,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: FutureBuilder<PatientProfilePodo>(
           future: patientprofile,
           builder: (BuildContext context, AsyncSnapshot<PatientProfilePodo> snapshot){
-            if(!snapshot.hasData){
-               return homescreenContent();
-              // return Column(
-              //   children: <Widget>[
-              //     refcodemidView(snapshot)
-              //   ],
-              // );
+            if(snapshot.hasData){
+              PatientProfilePodo profile = snapshot.data!;
+                return homescreenContent(profile);
             }else{
               return Container(
                 child: Center(child: CircularProgressIndicator(),),
@@ -76,10 +74,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget homescreenContent(){
+  Widget homescreenContent(PatientProfilePodo profile){
     final Size size = MediaQuery.of(context).size;
     final ThemeData themeData = Theme.of(context);
     double pad = 18;
+
+    SleepDiariesPODO todaysleepDiary = Workflow().getSleepDiary(profile.sleepDiaries,true,false);
+    SleepDiariesPODO yesterdaysleepDiary = Workflow().getSleepDiary(profile.sleepDiaries,false,true);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
           alignment: Alignment.centerRight,
           child: Padding(
             padding: sidePad,
-            child: Text('Welcome, Ifeanyi!',
+            child: Text('Welcome, ${profile.firstName}!',
               textAlign: TextAlign.right,
               style: themeData.textTheme.bodyText2,),
           ),
@@ -131,31 +132,46 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         SizedBox(height: pad,),
-        Center(
-          child: OptionButton(
-            text: "Complete Yesterday\'s Sleep Diary",
-            icon: Icons.menu_book,
-            width: size.width * 0.90,
-            buttonEvent: () {
-              Navigator.push(
-                  context, new MaterialPageRoute(builder: (context) => SleepDiary())
-              );
-            },
-          ),
-        ),
         SizedBox(height: pad,),
-        Center(
-          child: OptionButton(
-            text: "Complete Today\'s Sleep Diary",
-            icon: Icons.menu_book,
-            width: size.width * 0.90,
-            buttonEvent: () {},
-          ),
-        ),
+        ((){
+          if( Workflow().isSleepDiaryavailable(todaysleepDiary)) {
+            return Center(
+              child: OptionButton(
+                text: "Complete Today\'s Sleep Diary",
+                icon: Icons.menu_book,
+                width: size.width * 0.90,
+                buttonEvent: () {
+                  Navigator.push(context, new MaterialPageRoute(builder: (context) => SleepDiary(sleepDiariesPODO:todaysleepDiary)));
+                },
+              ),
+            );
+          }else{
+            return  SizedBox(height: 0.0,);
+          }
+        }()),
+        SizedBox(height: pad,),
+        ((){
+          if( Workflow().isSleepDiaryavailable(yesterdaysleepDiary)) {
+            return Center(
+              child: OptionButton(
+                text: "Complete Yesterday\'s Sleep Diary ",
+                icon: Icons.menu_book,
+                width: size.width * 0.90,
+                buttonEvent: () {
+                  Navigator.push(context, new MaterialPageRoute(builder: (context) => SleepDiary(sleepDiariesPODO:yesterdaysleepDiary)));
+                },
+              ),
+            );
+          }else{
+            return  SizedBox(height: 0.0,);
+          }
+        }()),
         SizedBox(height: pad,),
       ],
     );
   }
+
+
 
 }
 
