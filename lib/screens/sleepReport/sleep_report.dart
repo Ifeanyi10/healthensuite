@@ -101,16 +101,7 @@ class _SleepReportState extends State<SleepReport> {
     return Padding(
             padding: SleepReport.sidePad,
             child: DataTable(
-              columns: [
-                DataColumn(
-                  label: Text("DESCRIPTION", style: themeData.textTheme.headline5,),
-                  numeric: false
-                ),
-                DataColumn(
-                  label: Text("VALUE", style: themeData.textTheme.headline5,),
-                  numeric: false
-                )
-              ],
+              columns: tableHeaderWidget(themeData),
               rows: [
                 rowWidget(themeData, desc: "Average Bed Time", value: "21:00"),
                 rowWidget(themeData, desc: "Sleep Latency", value: "95%"),
@@ -121,6 +112,19 @@ class _SleepReportState extends State<SleepReport> {
               ],
             )
           );
+  }
+
+  List<DataColumn> tableHeaderWidget(ThemeData themeData) {
+    return [
+              DataColumn(
+                label: Text("DESCRIPTION", style: themeData.textTheme.headline5,),
+                numeric: false
+              ),
+              DataColumn(
+                label: Text("VALUE", style: themeData.textTheme.headline5,),
+                numeric: false
+              )
+            ];
   }
 
   DataRow rowWidget(ThemeData themeData, {String desc, String value}) {
