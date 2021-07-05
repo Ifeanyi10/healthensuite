@@ -44,6 +44,7 @@ const COLOR_GREY = Color.fromRGBO(141, 141, 141, 1.0);
 final Color appItemColorWhite = Colors.white;
 final Color appItemColorBlue = Colors.blueAccent;
 final Color appBodyColor = Colors.white;
+final Color appItemColorLightGrey = Colors.grey[200];
 final EdgeInsets edgePaddingLeft = const EdgeInsets.only(left: 20.0);
 
 const TextTheme TEXT_THEME_DEFAULT = TextTheme(
