@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:healthensuite/api/network.dart';
-import 'package:healthensuite/api/networkmodels/patientProfilePodo.dart';
-//import 'package:intl/intl.dart';
+import 'package:healthensuite/api/networkmodels/sleepDiaryPODO.dart';
+import 'package:healthensuite/api/statemanagement/behaviourlogic.dart';
 import 'package:healthensuite/models/icon_button.dart';
-import 'package:healthensuite/statemanagement/behaviourlogic.dart';
 import 'package:healthensuite/utilities/constants.dart';
-//import 'package:healthensuite/utilities/drawer_navigation.dart';
-//import 'package:healthensuite/utilities/constants.dart';
 
 
 // ignore: must_be_immutable
@@ -27,7 +24,7 @@ class SleepDiary extends StatefulWidget {
 class _SleepDiaryState extends State<SleepDiary> {
   final _formKey = GlobalKey<FormBuilderState>();
 
-  TimeOfDay? time;
+ TimeOfDay? time;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +38,11 @@ class _SleepDiaryState extends State<SleepDiary> {
     List<String> minutes = generateNumbers(59);
 
     String date = Workflow().convertDatetime2date(widget.sleepDiariesPODO.dateCreated.toString());
+
+    TimeOfDay? bedtime = Workflow().convertStringtoTimeofDay(widget.sleepDiariesPODO.bedTime);
+    TimeOfDay? tryTosleepTime = Workflow().convertStringtoTimeofDay(widget.sleepDiariesPODO.tryTosleepTime);
+    TimeOfDay? finalWakeupTime = Workflow().convertStringtoTimeofDay(widget.sleepDiariesPODO.finalWakeupTime);
+    TimeOfDay? timeLeftbed = Workflow().convertStringtoTimeofDay(widget.sleepDiariesPODO.timeLeftbed);
 
     return Scaffold(
       //drawer: NavigationDrawerWidget(indexNum: 2,),
@@ -76,11 +78,11 @@ class _SleepDiaryState extends State<SleepDiary> {
                     children: [
                       SizedBox(height: pad,),
 
-                      timeQuestion(sidePad, themeData, context, question: "What time did you get into bed last?", valName: "inBed"),
+                      timeQuestion(sidePad, themeData, context, bedtime, question: "What time did you get into bed last?", valName: "inBed"),
 
                       SizedBox(height: pad,),
 
-                      timeQuestion(sidePad, themeData, context, question: "What time did you try to go to sleep?", valName: "tryBed"),
+                      timeQuestion(sidePad, themeData, context, tryTosleepTime, question: "What time did you try to go to sleep?", valName: "tryBed"),
 
                       SizedBox(height: pad,),
 
@@ -101,11 +103,11 @@ class _SleepDiaryState extends State<SleepDiary> {
 
                       SizedBox(height: pad,),
 
-                      timeQuestion(sidePad, themeData, context, question: "What time was your final awakening?", valName: "finAwake"),
+                      timeQuestion(sidePad, themeData, context, finalWakeupTime, question: "What time was your final awakening?", valName: "finAwake"),
 
                        SizedBox(height: pad,),
 
-                      timeQuestion(sidePad, themeData, context, question: "What time did you get out of bed?", valName: "outBed"),
+                      timeQuestion(sidePad, themeData, context, timeLeftbed, question: "What time did you get out of bed?", valName: "outBed"),
 
                       SizedBox(height: pad,),
 
@@ -332,7 +334,7 @@ class _SleepDiaryState extends State<SleepDiary> {
             );
   }
 
-  Padding timeQuestion(EdgeInsets sidePad, ThemeData themeData, BuildContext context, {required String question, required String valName}) {
+  Padding timeQuestion(EdgeInsets sidePad, ThemeData themeData, BuildContext context, TimeOfDay? timeOfDay, {required String question, required String valName}) {
     return Padding(
               padding: sidePad,
               child: Column(
@@ -345,7 +347,7 @@ class _SleepDiaryState extends State<SleepDiary> {
                       Expanded(
                         child: FormBuilderTextField(
                           name: valName,
-                          initialValue: getText(_formKey, time, valName),
+                          initialValue: getCurrentTime(_formKey, timeOfDay, valName),
                           readOnly: true,
                           style: themeData.textTheme.bodyText1,
                         ),
@@ -377,7 +379,7 @@ class _SleepDiaryState extends State<SleepDiary> {
     getText(key, time, valName);
   }
 
-  String getText(GlobalKey<FormBuilderState> key, TimeOfDay? time, String valName) {
+  String getText1(GlobalKey<FormBuilderState> key, TimeOfDay? time, String valName) {
     String timeVal = "Select Time";
     if (time == null) {
       return timeVal;
@@ -390,49 +392,84 @@ class _SleepDiaryState extends State<SleepDiary> {
     }
   }
 
+  String getCurrentTime(GlobalKey<FormBuilderState> key, TimeOfDay? time, String valName) {
+    String timeVal = "Select Time";
+    if (time == null) {
+      return timeVal;
+    } else {
+      final hours = time.hour.toString().padLeft(2, '0');
+      final minutes = time.minute.toString().padLeft(2, '0');
+      timeVal = '$hours:$minutes';
+     // key.currentState!.fields[valName]!.didChange(timeVal);
+      return timeVal;
+    }
+  }
+
   void validateForm(GlobalKey<FormBuilderState> key){
         if(key.currentState!.saveAndValidate()){
           //key.currentState.save();
           print(key.currentState!.value);
           //key.currentState.reset();
         //  String? myVal = key.currentState!.fields["spQuality"]!.value;
-          String bedTime = key.currentState!.fields["inBed"]!.value;
-          String tryTosleepTime = key.currentState!.fields["tryBed"]!.value;
+          var bedTime = key.currentState!.fields["inBed"]!.value;
+          var tryTosleepTime = key.currentState!.fields["tryBed"]!.value;
           //"How long did it take you to fall asleep?"
-          String durationBeforesleepoff_HOUR = key.currentState!.fields["hrs1"]!.value;
-          String durationBeforesleepoff_MINUTES = key.currentState!.fields["mns1"]!.value;
-          double durationB4sleep = double.parse(durationBeforesleepoff_HOUR + "." + durationBeforesleepoff_MINUTES);
+          double durationB4sleep;
+          var durationBeforesleepoff_HOUR = key.currentState!.fields["hrs1"]!.value;
+          var durationBeforesleepoff_MINUTES = key.currentState!.fields["mns1"]!.value;
+          if(durationBeforesleepoff_HOUR == null || durationBeforesleepoff_MINUTES == null){
+            durationB4sleep = widget.sleepDiariesPODO.durationBeforesleepoff ?? 0.0;
+          }else{
+            durationB4sleep = double.parse(durationBeforesleepoff_HOUR + "." + durationBeforesleepoff_MINUTES);
+          }
           // "In total, how long did these awakenings last?"
-          String totalWakeUpduration_HOUR = key.currentState!.fields["hrs2"]!.value;
-          String totalWakeUpduration_MINUTE = key.currentState!.fields["mns2"]!.value;
-          double awakeningDurations = double.parse(totalWakeUpduration_HOUR + "." + totalWakeUpduration_MINUTE);
+          double awakeningDurations;
+          var totalWakeUpduration_HOUR = key.currentState!.fields["hrs2"]!.value;
+          var totalWakeUpduration_MINUTE = key.currentState!.fields["mns2"]!.value;
+          if(totalWakeUpduration_HOUR == null || totalWakeUpduration_MINUTE == null){
+            awakeningDurations = widget.sleepDiariesPODO.totalWakeUpduration ?? 0.0;
+          }else{
+            awakeningDurations = double.parse(totalWakeUpduration_HOUR + "." + totalWakeUpduration_MINUTE);
+          }
           // "Sleep quality"
-          String sleepQuality = key.currentState!.fields["spQuality"]!.value;
+          var slpQuality = key.currentState!.fields["spQuality"]!.value;
+          String sleepQuality = slpQuality ?? widget.sleepDiariesPODO.sleepQuality;
 
           int wakeUptimeCount = int.parse(key.currentState!.fields["wakeTimes"]!.value);
 
-          String finalWakeupTime = key.currentState!.fields["finAwake"]!.value;
-          String timeLeftbed = key.currentState!.fields["outBed"]!.value;
+          var finalWakeupTime = key.currentState!.fields["finAwake"]!.value;
+          var timeLeftbed = key.currentState!.fields["outBed"]!.value;
 
-          String currentmedication_amount1 = key.currentState!.fields["drNum1"]!.value;
-          String currentmedication_amount2 = key.currentState!.fields["drNum2"]!.value;
+          var currentmedication_amount1 = key.currentState!.fields["drNum1"]!.value;
+          var  currentmedication_amount2 = key.currentState!.fields["drNum2"]!.value;
 
-          String newMedname = key.currentState!.fields["medName1"]!.value;
-          String newMedamount = key.currentState!.fields["amTaken1"]!.value;
+          var newMedname = key.currentState!.fields["medName1"]!.value;
+          var newMedamount = key.currentState!.fields["amTaken1"]!.value;
 
-          String otherThings = key.currentState!.fields["otherNote"]!.value;
+          var otherThings = key.currentState!.fields["otherNote"]!.value;
 
 
            widget.sleepDiariesPODO.updateVariable(bedTime, tryTosleepTime, durationB4sleep,
               wakeUptimeCount, awakeningDurations, finalWakeupTime, timeLeftbed, sleepQuality, otherThings);
 
-          ApiAccess().saveSleepDiaries(sleepDiary: widget.sleepDiariesPODO);
+          Future<SleepDiariesPODO> savedSleepDiary = ApiAccess().saveSleepDiaries(sleepDiary: widget.sleepDiariesPODO);
 
           print("Bed : $bedTime , Try to wake up : $tryTosleepTime , "
               "Sleep Quality : $sleepQuality , Wake up count : $wakeUptimeCount , Final Wake up : $finalWakeupTime ,"
               "Time Left Bed : $timeLeftbed , Current Med 1 Amount : $currentmedication_amount1 , Awakening Duration : $awakeningDurations"
               "Current Med 2 amount : $currentmedication_amount2 , Duration before sleep $durationB4sleep "
               "New Med Name : $newMedname , New Med Amount : $newMedamount , Other things : $otherThings");
+
+          print("::::::::::::::::::::::::::::::::: SAVED ITEMS ::::::::::::::::::::::::::::::::::::::::::::::::::::");
+          savedSleepDiary.then((value) => {
+
+          print("Bed : ${value.bedTime} , Try to wake up : ${value.tryTosleepTime} , "
+          "Sleep Quality : ${value.sleepQuality} , Wake up count : ${value.wakeUptimeCount} , Final Wake up : ${value.finalWakeupTime} ,"
+          "Time Left Bed : ${value.timeLeftbed}, Current Med 1 Amount : , Awakening Duration : ${value.totalWakeUpduration} "
+          "Current Med 2 amount : , Duration before sleep ${value.bedTime} "
+          "New Med Name : , New Med Amount : , Other things : ")
+          });
+
         }
   }
 

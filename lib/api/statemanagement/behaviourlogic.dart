@@ -1,4 +1,6 @@
 
+import 'package:flutter/material.dart';
+import 'package:healthensuite/api/networkmodels/sleepDiaryPODO.dart';
 import 'package:healthensuite/api/networkmodels/patientProfilePodo.dart';
 import 'package:healthensuite/screens/sleepDiary/sleep_diary.dart';
 import 'package:intl/intl.dart';
@@ -60,4 +62,15 @@ class Workflow{
     final String formatted_date = formatter.format(date);
     return formatted_date;
   }
+
+  TimeOfDay? convertStringtoTimeofDay(String?  time){
+    if(time != null) {
+      var tt = time.split(":");
+      int hour = int.parse(tt[0]);
+      int minute = int.parse(tt[1]);
+      TimeOfDay tod = TimeOfDay(hour: hour, minute: minute);
+      return tod;
+    }
+  }
+
 }

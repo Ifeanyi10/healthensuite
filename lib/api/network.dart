@@ -1,9 +1,9 @@
 import 'dart:convert';
-
-import 'package:healthensuite/statemanagement/diskstorage.dart';
+import 'package:healthensuite/api/statemanagement/diskstorage.dart';
 import 'package:http/http.dart' as http;
 import 'networkUtilities.dart';
 import 'networkmodels/loginPodo.dart';
+import 'networkmodels/sleepDiaryPODO.dart';
 import 'networkmodels/patientProfilePodo.dart';
 
 class ApiAccess {
@@ -63,24 +63,38 @@ class ApiAccess {
     print("Date Created : ${sleepDiary.dateCreated}");
     print("Other Things : ${sleepDiary.otherThings}");
     String? token;
+
     Future<String?> tk = Localstorage().getString(key_login_token);
     await tk.then((value) => {token = value!});
-    final response = await http.post(Uri.parse(loginURL),
+    final response = await http.post(Uri.parse(save_sleepdiary_url),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Accept': 'application/json',
           'Authorization': 'Bearer $token'
         },
-        body: sleepDiary.toJson()
-        // body: jsonEncode(<String, String?>{
-        // }),
+        body: jsonEncode(<String, dynamic>{
+          "id": sleepDiary.id,
+          "bedTime": sleepDiary.bedTime,
+          "tryTosleepTime": sleepDiary.tryTosleepTime,
+          "durationBeforesleepoff": sleepDiary.durationBeforesleepoff,
+          "wakeUptimeCount": sleepDiary.wakeUptimeCount,
+          "totalWakeUpduration": sleepDiary.totalWakeUpduration,
+          "finalWakeupTime": sleepDiary.finalWakeupTime,
+          "timeLeftbed": sleepDiary.timeLeftbed,
+          "sleepQuality": sleepDiary.sleepQuality,
+          "otherThings": sleepDiary.otherThings,
+          // "medications": [],
+          // "othermedications": [],
+          "date_Created": sleepDiary.dateCreated
+        }),
         );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       SleepDiariesPODO sleepDiary = SleepDiariesPODO.fromJson(jsonDecode(response.body));
+      print("${sleepDiary.toString()}");
       return sleepDiary;
     } else {
-      throw Exception("Couldn't pull patient profile");
+      throw Exception("Couldn't pull patient profile , status code ${response.statusCode} " );
     }
   }
 }

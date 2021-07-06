@@ -1,14 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:healthensuite/api/network.dart';
+import 'package:healthensuite/api/networkmodels/sleepDiaryPODO.dart';
 import 'package:healthensuite/api/networkmodels/patientProfilePodo.dart';
-import 'package:healthensuite/statemanagement/behaviourlogic.dart';
-//import 'package:google_fonts/google_fonts.dart';
+import 'package:healthensuite/api/statemanagement/behaviourlogic.dart';
 import 'package:healthensuite/utilities/drawer_navigation.dart';
 import 'package:healthensuite/utilities/text_data.dart';
 import 'package:healthensuite/models/option_button.dart';
 import 'package:healthensuite/screens/sleepDiary/sleep_diary.dart';
-//import 'package:healthensuite/utilities/default.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
