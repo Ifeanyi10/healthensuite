@@ -52,10 +52,10 @@ class _Level1of2State extends State<Level1of2> {
                        padding: Level1of2.sidePad,
                        child: Image.asset('assets/images/Insomnia-img.jpg'),
                      ),
-                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet6"]),
-                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet7"]),
+                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet6"]!),
+                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet7"]!),
                      SizedBox(height: pad,),
-                     sectionTitleWidget(themeData, text: LEVEL1_DATA["subHead2"], textStyle: themeData.textTheme.headline5),
+                     sectionTitleWidget(themeData, text: LEVEL1_DATA["subHead2"]!, textStyle: themeData.textTheme.headline5),
                      checkBoxBuilderWidget(_formKey, themeData),
 
                     //  bodyTextWidget(themeData, text: LEVEL1_DATA["bullet4"]),
@@ -160,14 +160,14 @@ class _Level1of2State extends State<Level1of2> {
   //             );
   // }
 
-  MaterialButton navIconButton(BuildContext context, {String buttonText, Function buttonActon}){
+  MaterialButton navIconButton(BuildContext context, {required String buttonText, Function? buttonActon}){
     return  MaterialButton(
               child: Text(buttonText, style: TextStyle(color: appItemColorBlue, fontWeight: FontWeight.w700),),
-              onPressed: buttonActon,
+              onPressed: buttonActon as void Function()?,
             );
   }
 
-   Padding sectionTitleWidget(ThemeData themeData, {String text, TextStyle textStyle} ) {
+   Padding sectionTitleWidget(ThemeData themeData, {required String text, TextStyle? textStyle} ) {
      return Padding(
                 padding: Level1of2.sidePad,
                 child: Text(text,
@@ -176,7 +176,7 @@ class _Level1of2State extends State<Level1of2> {
               );
   }
 
-  Padding bodyTextWidget(ThemeData themeData, {String text}) {
+  Padding bodyTextWidget(ThemeData themeData, {required String text}) {
     return Padding(
               padding: Level1of2.sidePad,
               child: Text(text, 

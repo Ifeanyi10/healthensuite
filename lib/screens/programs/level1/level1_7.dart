@@ -6,9 +6,9 @@ import 'package:healthensuite/models/icon_button.dart';
 
 
 class MyChoice{
-  String choice;
-  String choiceValue;
-  int index;
+  String? choice;
+  String? choiceValue;
+  int? index;
   MyChoice({this.choice, this.index, this.choiceValue});
 }
 
@@ -28,9 +28,9 @@ class _Level1of7State extends State<Level1of7> {
   bool radioAloneIsVisible = false;
   bool radioRoomateIsVisible = false;
   bool formFieldIsVisible = false;
-  int defaultIndexbase = -1;
-  int defaultIndexAlone = -1;
-  int defaultIndexRoomate = -1; 
+  int? defaultIndexbase = -1;
+  int? defaultIndexAlone = -1;
+  int? defaultIndexRoomate = -1; 
   
   static final _formKey = GlobalKey<FormBuilderState>();
 
@@ -64,14 +64,14 @@ class _Level1of7State extends State<Level1of7> {
                    children: [
                      SizedBox(height: pad,),
                      sectionTitleWidget(themeData, text: "Getting support and involving your partner", textStyle: themeData.textTheme.headline4),
-                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet21"]),
+                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet21"]!),
 
                      SizedBox(height: pad,),
-                     sectionTitleWidget(themeData, text: LEVEL1_DATA["subHead4"], textStyle: themeData.textTheme.headline5),
-                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet22"]),
+                     sectionTitleWidget(themeData, text: LEVEL1_DATA["subHead4"]!, textStyle: themeData.textTheme.headline5),
+                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet22"]!),
 
                      SizedBox(height: pad,),
-                     sectionTitleWidget(themeData, text: LEVEL1_DATA["radioQ1"], textStyle: themeData.textTheme.headline5),
+                     sectionTitleWidget(themeData, text: LEVEL1_DATA["radioQ1"]!, textStyle: themeData.textTheme.headline5),
                      radioButtonBase(themeData),
 
                     Visibility(child: radioButtonAlone(themeData, context), visible: radioAloneIsVisible,),
@@ -202,14 +202,14 @@ class _Level1of7State extends State<Level1of7> {
   //             );
   // }
 
-  MaterialButton navIconButton(BuildContext context, {String buttonText, Function buttonActon}){
+  MaterialButton navIconButton(BuildContext context, {required String buttonText, Function? buttonActon}){
     return  MaterialButton(
               child: Text(buttonText, style: TextStyle(color: appItemColorBlue, fontWeight: FontWeight.w700),),
-              onPressed: buttonActon,
+              onPressed: buttonActon as void Function()?,
             );
   }
 
-   Padding sectionTitleWidget(ThemeData themeData, {String text, TextStyle textStyle} ) {
+   Padding sectionTitleWidget(ThemeData themeData, {required String text, TextStyle? textStyle} ) {
      return Padding(
                 padding: Level1of7.sidePad,
                 child: Text(text,
@@ -218,7 +218,7 @@ class _Level1of7State extends State<Level1of7> {
               );
   }
 
-  Padding bodyTextWidget(ThemeData themeData, {String text}) {
+  Padding bodyTextWidget(ThemeData themeData, {required String text}) {
     return Padding(
               padding: Level1of7.sidePad,
               child: Text(text, 
@@ -233,7 +233,7 @@ class _Level1of7State extends State<Level1of7> {
 
   Column radioButtonBase(ThemeData themeData){
     
-    String defaultChoiceBase = "";
+    String? defaultChoiceBase = "";
     List<MyChoice> choices = [
       MyChoice(index: 0, choice: "I sleep alone"),
       MyChoice(index: 1, choice: "I share my bedroom with another person, but I sleep in my own bed."),
@@ -250,7 +250,7 @@ class _Level1of7State extends State<Level1of7> {
                   title: Text('${data.choice}', style: themeData.textTheme.bodyText1,),
                   groupValue: defaultIndexbase,
                   value: data.index,
-                  onChanged: (value){
+                  onChanged: (dynamic value){
                         defaultChoiceBase = data.choice; 
                         defaultIndexbase = data.index; 
                         if(value == 0){
@@ -284,11 +284,11 @@ class _Level1of7State extends State<Level1of7> {
       MyChoice(index: 0, choice: "Yes"),
       MyChoice(index: 1, choice: "No"),
     ];
-    String defaultChoice = "";
+    String? defaultChoice = "";
 
     return Column(
       children: [
-        sectionTitleWidget(themeData, text: LEVEL1_DATA["radioQ2"], textStyle: themeData.textTheme.headline5),
+        sectionTitleWidget(themeData, text: LEVEL1_DATA["radioQ2"]!, textStyle: themeData.textTheme.headline5),
         Wrap(
           children: [
             Container(
@@ -297,7 +297,7 @@ class _Level1of7State extends State<Level1of7> {
                   title: Text('${data.choice}', style: themeData.textTheme.bodyText1,),
                   groupValue: defaultIndexAlone,
                   value: data.index,
-                  onChanged: (value){
+                  onChanged: (dynamic value){
                     defaultChoice = data.choice; 
                     defaultIndexAlone = data.index; 
                     if(value == 0){
@@ -330,11 +330,11 @@ class _Level1of7State extends State<Level1of7> {
       MyChoice(index: 1, choice: "I would like to nominate someone else."),
       MyChoice(index: 2, choice: "I do not want to nominate a support person."),
     ];
-    String defaultChoice = "";
+    String? defaultChoice = "";
 
     return Column(
       children: [
-        sectionTitleWidget(themeData, text: LEVEL1_DATA["radioQ3"], textStyle: themeData.textTheme.headline5),
+        sectionTitleWidget(themeData, text: LEVEL1_DATA["radioQ3"]!, textStyle: themeData.textTheme.headline5),
         Wrap(
           children: [
             Container(
@@ -343,7 +343,7 @@ class _Level1of7State extends State<Level1of7> {
                   title: Text('${data.choice}', style: themeData.textTheme.bodyText1,),
                   groupValue: defaultIndexRoomate,
                   value: data.index,
-                  onChanged: (value){
+                  onChanged: (dynamic value){
                     defaultChoice = data.choice; 
                     defaultIndexRoomate = data.index; 
                     if(value == 0){

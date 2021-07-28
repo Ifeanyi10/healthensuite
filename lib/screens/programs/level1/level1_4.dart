@@ -45,7 +45,7 @@ class _Level1of4State extends State<Level1of4> {
                    children: [
                      SizedBox(height: pad,),
                      sectionTitleWidget(themeData, text: "How does this program work?", textStyle: themeData.textTheme.headline4),
-                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet10"]),
+                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet10"]!),
                      //SizedBox(height: pad,),
                      topicOutlineDataTable(themeData),
                     //  sectionTitleWidget(themeData, text: LEVEL1_DATA["topic1"], textStyle: themeData.textTheme.headline5),
@@ -55,7 +55,7 @@ class _Level1of4State extends State<Level1of4> {
                     //  sectionTitleWidget(themeData, text: LEVEL1_DATA["topic5"], textStyle: themeData.textTheme.headline5),
                     //  sectionTitleWidget(themeData, text: LEVEL1_DATA["topic6"], textStyle: themeData.textTheme.headline5),
                      //SizedBox(height: pad,),
-                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet11"]),
+                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet11"]!),
 
                    ],
                 ),
@@ -120,14 +120,14 @@ class _Level1of4State extends State<Level1of4> {
           );
   }
 
-  MaterialButton navIconButton(BuildContext context, {String buttonText, Function buttonActon}){
+  MaterialButton navIconButton(BuildContext context, {required String buttonText, Function? buttonActon}){
     return  MaterialButton(
               child: Text(buttonText, style: TextStyle(color: appItemColorBlue, fontWeight: FontWeight.w700),),
-              onPressed: buttonActon,
+              onPressed: buttonActon as void Function()?,
             );
   }
 
-   Padding sectionTitleWidget(ThemeData themeData, {String text, TextStyle textStyle} ) {
+   Padding sectionTitleWidget(ThemeData themeData, {required String text, TextStyle? textStyle} ) {
      return Padding(
                 padding: Level1of4.sidePad,
                 child: Text(text,
@@ -136,7 +136,7 @@ class _Level1of4State extends State<Level1of4> {
               );
   }
 
-  Padding bodyTextWidget(ThemeData themeData, {String text}) {
+  Padding bodyTextWidget(ThemeData themeData, {required String text}) {
     return Padding(
               padding: Level1of4.sidePad,
               child: Text(text, 
@@ -150,12 +150,12 @@ class _Level1of4State extends State<Level1of4> {
             child: DataTable(
               columns: tableHeaderWidget(themeData),
               rows: [
-                rowWidget(themeData, desc: "1", value: LEVEL1_DATA["topic1"]),
-                rowWidget(themeData, desc: "2", value: LEVEL1_DATA["topic2"]),
-                rowWidget(themeData, desc: "3", value: LEVEL1_DATA["topic3"]),
-                rowWidget(themeData, desc: "4", value: LEVEL1_DATA["topic4"]),
-                rowWidget(themeData, desc: "5", value: LEVEL1_DATA["topic5"]),
-                rowWidget(themeData, desc: "6", value: LEVEL1_DATA["topic6"]),
+                rowWidget(themeData, desc: "1", value: LEVEL1_DATA["topic1"]!),
+                rowWidget(themeData, desc: "2", value: LEVEL1_DATA["topic2"]!),
+                rowWidget(themeData, desc: "3", value: LEVEL1_DATA["topic3"]!),
+                rowWidget(themeData, desc: "4", value: LEVEL1_DATA["topic4"]!),
+                rowWidget(themeData, desc: "5", value: LEVEL1_DATA["topic5"]!),
+                rowWidget(themeData, desc: "6", value: LEVEL1_DATA["topic6"]!),
                 
               ],
             )
@@ -175,7 +175,7 @@ class _Level1of4State extends State<Level1of4> {
             ];
   }
 
-  DataRow rowWidget(ThemeData themeData, {String desc, String value}) {
+  DataRow rowWidget(ThemeData themeData, {required String desc, required String value}) {
     return DataRow(
             cells: [
               DataCell(

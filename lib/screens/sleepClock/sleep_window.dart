@@ -9,12 +9,12 @@ import 'package:healthensuite/utilities/constants.dart';
 
 class SleepWindow extends StatelessWidget {
 
-  final Function onMenuTap;
+  final Function? onMenuTap;
   static final String title = 'Sleep Window';
   final _formKey = GlobalKey<FormBuilderState>();
-  TimeOfDay time;
+  TimeOfDay? time;
 
-  SleepWindow({Key key, this.onMenuTap}) : super(key: key);
+  SleepWindow({Key? key, this.onMenuTap}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -81,7 +81,7 @@ class SleepWindow extends StatelessWidget {
   //Builder Widget below
 
 
-  Padding timeQuestion(EdgeInsets sidePad, ThemeData themeData, BuildContext context, {String question, String valName}) {
+  Padding timeQuestion(EdgeInsets sidePad, ThemeData themeData, BuildContext context, {required String question, required String valName}) {
     return Padding(
               padding: sidePad,
               child: Column(
@@ -112,7 +112,7 @@ class SleepWindow extends StatelessWidget {
             );
   }
 
-  Future pickTime(BuildContext context, GlobalKey<FormBuilderState> key, String valName, TimeOfDay time) async {
+  Future pickTime(BuildContext context, GlobalKey<FormBuilderState> key, String valName, TimeOfDay? time) async {
     final initialTime = TimeOfDay(hour: 9, minute: 0);
     final newTime = await showTimePicker(
       context: context,
@@ -126,7 +126,7 @@ class SleepWindow extends StatelessWidget {
     getText(key, time, valName);
   }
 
-  String getText(GlobalKey<FormBuilderState> key, TimeOfDay time, String valName) {
+  String getText(GlobalKey<FormBuilderState> key, TimeOfDay? time, String valName) {
     String timeVal = "Select Time";    
     if (time == null) {
       return timeVal;
@@ -134,7 +134,7 @@ class SleepWindow extends StatelessWidget {
       final hours = time.hour.toString().padLeft(2, '0');
       final minutes = time.minute.toString().padLeft(2, '0');
       timeVal = '$hours:$minutes';
-      key.currentState.fields[valName].didChange(timeVal);
+      key.currentState!.fields[valName]!.didChange(timeVal);
       return timeVal;
     }
   }

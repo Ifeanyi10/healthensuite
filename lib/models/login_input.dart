@@ -14,11 +14,11 @@ class LoginInput extends StatelessWidget{
   final bool hideText;
   final bool hideText2;
 
-  final Function selectHandler;
-  final Function selectUsernameValidateHandler;
-  final Function selectPasswordValidateHandler;
+  final Function? selectHandler;
+  final Function? selectUsernameValidateHandler;
+  final Function? selectPasswordValidateHandler;
   final formKey = new GlobalKey<FormState>();
-  String _value1,_value2;
+  String? _value1,_value2;
   
 
   LoginInput({this.hintText = "Enter Your Username", this.hintText2 = "Enter Your Password", 
@@ -55,7 +55,7 @@ class LoginInput extends StatelessWidget{
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             new TextFormField(
-                              validator: (val) => !val.contains("@") ? "Username is not a valid email" : null,
+                              validator: (val) => !val!.contains("@") ? "Username is not a valid email" : null,
                               onSaved: (val) => _value1 = val,
                               decoration: new InputDecoration(
                                   //icon: Icon(Icons.person),
@@ -69,7 +69,7 @@ class LoginInput extends StatelessWidget{
                               padding: const EdgeInsets.only(top: 30.0),
                             ),
                             new TextFormField(
-                              validator: (val) => val.length < 6  ? "Password length should be Greater than 6" : null,
+                              validator: (val) => val!.length < 6  ? "Password length should be Greater than 6" : null,
                               onSaved: (val) => _value2 = val,
                               decoration: new InputDecoration(
                                 //icon: Icon(Icons.panorama_fish_eye),
@@ -89,7 +89,7 @@ class LoginInput extends StatelessWidget{
                               splashColor: Colors.teal,
                               textColor: Colors.white,
                               child: new Icon(FontAwesomeIcons.signInAlt),
-                              onPressed: selectHandler,
+                              onPressed: selectHandler as void Function()?,
                             )
                           ],
                         ),

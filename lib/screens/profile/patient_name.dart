@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PatientName extends StatelessWidget{
-  final String patientNameText;
-  final Function buttonEvent;
+  final String? patientNameText;
+  final Function? buttonEvent;
 
   PatientName({this.patientNameText, this.buttonEvent});
 
@@ -38,7 +38,7 @@ class PatientName extends StatelessWidget{
               ),
               SizedBox(width: 1.0,),
               IconButton(
-                onPressed: buttonEvent,
+                onPressed: buttonEvent as void Function()?,
                 icon: Icon(Icons.edit),
               ),
             ] 

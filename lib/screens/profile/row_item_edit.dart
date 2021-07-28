@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class RowItemEdit extends StatelessWidget{
-  final IconData rowIcon;
-  final IconData buttonIcon;
-  final String rowText;
-  final Function buttonEvent;
+  final IconData? rowIcon;
+  final IconData? buttonIcon;
+  final String? rowText;
+  final Function? buttonEvent;
 
   RowItemEdit({this.rowIcon, this.buttonIcon, this.rowText, this.buttonEvent});
 
@@ -20,7 +20,7 @@ class RowItemEdit extends StatelessWidget{
           ),
           SizedBox(width: 10.0),
           Text(
-            rowText,
+            rowText!,
             style: TextStyle(
               color: Colors.black54,
               fontSize: 18.0,
@@ -30,7 +30,7 @@ class RowItemEdit extends StatelessWidget{
           ),
           SizedBox(width: 1.0,),
           IconButton(
-            onPressed: buttonEvent,
+            onPressed: buttonEvent as void Function()?,
             icon: Icon(buttonIcon),
           ),
         ],

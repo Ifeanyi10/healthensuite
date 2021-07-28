@@ -5,9 +5,9 @@ import 'package:healthensuite/screens/programs/level1/level1_6.dart';
 
 
 class MyChoice{
-  String choice;
-  String choiceValue;
-  int index;
+  String? choice;
+  String? choiceValue;
+  int? index;
   MyChoice({this.choice, this.index, this.choiceValue});
 }
 
@@ -57,11 +57,11 @@ class _Level1of5State extends State<Level1of5> {
                        padding: Level1of5.sidePad,
                        child: Image.asset('assets/images/sleepPills1-img.jpg'),
                      ),
-                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet12"]),
-                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet13"]),
-                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet14"]),
+                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet12"]!),
+                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet13"]!),
+                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet14"]!),
                      SizedBox(height: pad,),
-                     sectionTitleWidget(themeData, text: LEVEL1_DATA["subHead3"], textStyle: themeData.textTheme.headline5),
+                     sectionTitleWidget(themeData, text: LEVEL1_DATA["subHead3"]!, textStyle: themeData.textTheme.headline5),
                       RadioGroup(),
 
                    ],
@@ -135,14 +135,14 @@ class _Level1of5State extends State<Level1of5> {
   //             );
   // }
 
-  MaterialButton navIconButton(BuildContext context, {String buttonText, Function buttonActon}){
+  MaterialButton navIconButton(BuildContext context, {required String buttonText, Function? buttonActon}){
     return  MaterialButton(
               child: Text(buttonText, style: TextStyle(color: appItemColorBlue, fontWeight: FontWeight.w700),),
-              onPressed: buttonActon,
+              onPressed: buttonActon as void Function()?,
             );
   }
 
-   Padding sectionTitleWidget(ThemeData themeData, {String text, TextStyle textStyle} ) {
+   Padding sectionTitleWidget(ThemeData themeData, {required String text, TextStyle? textStyle} ) {
      return Padding(
                 padding: Level1of5.sidePad,
                 child: Text(text,
@@ -151,7 +151,7 @@ class _Level1of5State extends State<Level1of5> {
               );
   }
 
-  Padding bodyTextWidget(ThemeData themeData, {String text}) {
+  Padding bodyTextWidget(ThemeData themeData, {required String text}) {
     return Padding(
               padding: Level1of5.sidePad,
               child: Text(text, 
@@ -168,8 +168,8 @@ class RadioGroup extends StatefulWidget {
 }
 
 class _RadioGroupState extends State<RadioGroup> {
-  String defaultChoice = "";
-    int defaultIndex = -1; 
+  String? defaultChoice = "";
+    int? defaultIndex = -1; 
 
     List<MyChoice> choices = [
       MyChoice(index: 0, choice: "I feel confident I will be able to stick to this plan.", choiceValue: ""),
@@ -191,7 +191,7 @@ class _RadioGroupState extends State<RadioGroup> {
                   title: Text('${data.choice}', style: themeData.textTheme.bodyText1,),
                   groupValue: defaultIndex,
                   value: data.index,
-                  onChanged: (value){
+                  onChanged: (dynamic value){
                     setState(() {
                         defaultChoice = data.choice; 
                         defaultIndex = data.index; 
@@ -216,15 +216,15 @@ class _RadioGroupState extends State<RadioGroup> {
     );
   }
 
-  createAlertDialog(BuildContext context, {String head, String body}){
+  createAlertDialog(BuildContext context, {String? head, String? body}){
      final ThemeData themeData = Theme.of(context);
     return showDialog(
       context: context, 
       barrierDismissible: false,
       builder: (context){
         return AlertDialog(
-          title: Text(head, style: themeData.textTheme.headline5,),
-          content: Text(body, 
+          title: Text(head!, style: themeData.textTheme.headline5,),
+          content: Text(body!, 
           style: themeData.textTheme.bodyText2,),
           actions: [
             MaterialButton(

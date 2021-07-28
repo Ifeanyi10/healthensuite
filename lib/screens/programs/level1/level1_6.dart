@@ -45,16 +45,16 @@ class _Level1of6State extends State<Level1of6> {
                    children: [
                      SizedBox(height: pad,),
                      sectionTitleWidget(themeData, text: "Why is it a good idea to reduce my medications gradually?", textStyle: themeData.textTheme.headline4),
-                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet15"]),
-                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet16"]),
+                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet15"]!),
+                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet16"]!),
                      Padding(
                        padding: Level1of6.sidePad,
                        child: Image.asset('assets/images/sleepPills2-img.jpg'),
                      ),
-                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet17"]),
-                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet18"]),
-                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet19"]),
-                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet20"]),
+                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet17"]!),
+                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet18"]!),
+                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet19"]!),
+                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet20"]!),
 
                    ],
                 ),
@@ -127,14 +127,14 @@ class _Level1of6State extends State<Level1of6> {
   //             );
   // }
 
-  MaterialButton navIconButton(BuildContext context, {String buttonText, Function buttonActon}){
+  MaterialButton navIconButton(BuildContext context, {required String buttonText, Function? buttonActon}){
     return  MaterialButton(
               child: Text(buttonText, style: TextStyle(color: appItemColorBlue, fontWeight: FontWeight.w700),),
-              onPressed: buttonActon,
+              onPressed: buttonActon as void Function()?,
             );
   }
 
-   Padding sectionTitleWidget(ThemeData themeData, {String text, TextStyle textStyle} ) {
+   Padding sectionTitleWidget(ThemeData themeData, {required String text, TextStyle? textStyle} ) {
      return Padding(
                 padding: Level1of6.sidePad,
                 child: Text(text,
@@ -143,7 +143,7 @@ class _Level1of6State extends State<Level1of6> {
               );
   }
 
-  Padding bodyTextWidget(ThemeData themeData, {String text}) {
+  Padding bodyTextWidget(ThemeData themeData, {required String text}) {
     return Padding(
               padding: Level1of6.sidePad,
               child: Text(text, 

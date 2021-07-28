@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class RowItem extends StatelessWidget{
-  final IconData rowIcon;
-  final String rowText;
+  final IconData? rowIcon;
+  final String? rowText;
 
   RowItem({this.rowIcon, this.rowText});
 
@@ -18,7 +18,7 @@ class RowItem extends StatelessWidget{
           ),
           SizedBox(width: 10.0),
           Text(
-            rowText,
+            rowText!,
             style: TextStyle(
               color: Colors.black54,
               fontSize: 18.0,

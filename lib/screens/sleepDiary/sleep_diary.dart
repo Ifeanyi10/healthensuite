@@ -10,12 +10,12 @@ import 'package:healthensuite/utilities/constants.dart';
 
 class SleepDiary extends StatelessWidget {
 
-  final Function onMenuTap;
+  final Function? onMenuTap;
   static final String title = 'Sleep Diary';
   final _formKey = GlobalKey<FormBuilderState>();
-  TimeOfDay time;
+  TimeOfDay? time;
 
-  SleepDiary({Key key, this.onMenuTap}) : super(key: key);
+  SleepDiary({Key? key, this.onMenuTap}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -191,7 +191,7 @@ class SleepDiary extends StatelessWidget {
       );
   }
 
-  Padding drugNumberInput(EdgeInsets sidePad, ThemeData themeData, {String question, String valName}) {
+  Padding drugNumberInput(EdgeInsets sidePad, ThemeData themeData, {required String question, required String valName}) {
     return Padding(
                       padding: sidePad,
                       child: Column(
@@ -210,7 +210,7 @@ class SleepDiary extends StatelessWidget {
                     );
   }
 
-  Padding normalTextInput(EdgeInsets sidePad, ThemeData themeData, {String question, String valName}) {
+  Padding normalTextInput(EdgeInsets sidePad, ThemeData themeData, {required String question, required String valName}) {
     return Padding(
                       padding: sidePad,
                       child: Column(
@@ -227,7 +227,7 @@ class SleepDiary extends StatelessWidget {
                     );
   }
 
-  Padding numberInput(EdgeInsets sidePad, ThemeData themeData, {String question, String valName}) {
+  Padding numberInput(EdgeInsets sidePad, ThemeData themeData, {required String question, required String valName}) {
     return Padding(
                       padding: sidePad,
                       child: Column(
@@ -248,7 +248,7 @@ class SleepDiary extends StatelessWidget {
                     );
   }
 
-  Padding hourMinute(EdgeInsets sidePad, ThemeData themeData, List<String> hours, List<String> minutes, {String question, String hrValName, String mnValName}) {
+  Padding hourMinute(EdgeInsets sidePad, ThemeData themeData, List<String> hours, List<String> minutes, {required String question, required String hrValName, required String mnValName}) {
     return Padding(
               padding: sidePad,
               child: Column(
@@ -319,7 +319,7 @@ class SleepDiary extends StatelessWidget {
             );
   }
 
-  Padding timeQuestion(EdgeInsets sidePad, ThemeData themeData, BuildContext context, {String question, String valName}) {
+  Padding timeQuestion(EdgeInsets sidePad, ThemeData themeData, BuildContext context, {required String question, required String valName}) {
     return Padding(
               padding: sidePad,
               child: Column(
@@ -350,7 +350,7 @@ class SleepDiary extends StatelessWidget {
             );
   }
 
-  Future pickTime(BuildContext context, GlobalKey<FormBuilderState> key, String valName, TimeOfDay time) async {
+  Future pickTime(BuildContext context, GlobalKey<FormBuilderState> key, String valName, TimeOfDay? time) async {
     final initialTime = TimeOfDay(hour: 9, minute: 0);
     final newTime = await showTimePicker(
       context: context,
@@ -364,7 +364,7 @@ class SleepDiary extends StatelessWidget {
     getText(key, time, valName);
   }
 
-  String getText(GlobalKey<FormBuilderState> key, TimeOfDay time, String valName) {
+  String getText(GlobalKey<FormBuilderState> key, TimeOfDay? time, String valName) {
     String timeVal = "Select Time";    
     if (time == null) {
       return timeVal;
@@ -372,17 +372,17 @@ class SleepDiary extends StatelessWidget {
       final hours = time.hour.toString().padLeft(2, '0');
       final minutes = time.minute.toString().padLeft(2, '0');
       timeVal = '$hours:$minutes';
-      key.currentState.fields[valName].didChange(timeVal);
+      key.currentState!.fields[valName]!.didChange(timeVal);
       return timeVal;
     }
   }
 
   void validateForm(GlobalKey<FormBuilderState> key){
-        if(key.currentState.saveAndValidate()){
+        if(key.currentState!.saveAndValidate()){
           //key.currentState.save();
-          print(key.currentState.value);
+          print(key.currentState!.value);
           //key.currentState.reset();
-          String myVal = key.currentState.fields["spQuality"].value;
+          String? myVal = key.currentState!.fields["spQuality"]!.value;
           print("Its value: $myVal");
         }
   }

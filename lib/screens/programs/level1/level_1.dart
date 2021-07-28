@@ -54,13 +54,13 @@ class _Level1State extends State<Level1> {
                  children: [
                    SizedBox(height: pad,),
                    sectionTitleWidget(themeData, text: "Introduction to Health enSuite Insomnia", textStyle: themeData.textTheme.headline4),
-                   bodyTextWidget(themeData, text: LEVEL1_DATA["bullet1"]),
-                   bodyTextWidget(themeData, text: LEVEL1_DATA["bullet2"]),
-                   bodyTextWidget(themeData, text: LEVEL1_DATA["bullet3"]),
+                   bodyTextWidget(themeData, text: LEVEL1_DATA["bullet1"]!),
+                   bodyTextWidget(themeData, text: LEVEL1_DATA["bullet2"]!),
+                   bodyTextWidget(themeData, text: LEVEL1_DATA["bullet3"]!),
                    SizedBox(height: pad,),
-                   sectionTitleWidget(themeData, text: LEVEL1_DATA["subHead1"], textStyle: themeData.textTheme.headline5),
-                   bodyTextWidget(themeData, text: LEVEL1_DATA["bullet4"]),
-                   bodyTextWidget(themeData, text: LEVEL1_DATA["bullet5"]),
+                   sectionTitleWidget(themeData, text: LEVEL1_DATA["subHead1"]!, textStyle: themeData.textTheme.headline5),
+                   bodyTextWidget(themeData, text: LEVEL1_DATA["bullet4"]!),
+                   bodyTextWidget(themeData, text: LEVEL1_DATA["bullet5"]!),
 
                  ],
               ),
@@ -99,7 +99,7 @@ class _Level1State extends State<Level1> {
     );
   }
 
-   Padding sectionTitleWidget(ThemeData themeData, {String text, TextStyle textStyle} ) {
+   Padding sectionTitleWidget(ThemeData themeData, {required String text, TextStyle? textStyle} ) {
      return Padding(
                 padding: Level1.sidePad,
                 child: Text(text,
@@ -122,8 +122,8 @@ class _Level1State extends State<Level1> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 splashTextWidget(themeData, text: "Welcome $patientName,"),
-                splashTextWidget(themeData, text: LEVEL1_DATA["splashBullet1"]),
-                splashTextWidget(themeData, text: LEVEL1_DATA["splashBullet2"]),
+                splashTextWidget(themeData, text: LEVEL1_DATA["splashBullet1"]!),
+                splashTextWidget(themeData, text: LEVEL1_DATA["splashBullet2"]!),
               ],
             ),
           ),
@@ -139,12 +139,12 @@ class _Level1State extends State<Level1> {
       });
   }
 
-  Text splashTextWidget(ThemeData themeData, {String text}) {
+  Text splashTextWidget(ThemeData themeData, {required String text}) {
     return Text(text, 
                 style: themeData.textTheme.bodyText1,);
   }
 
-  Padding bodyTextWidget(ThemeData themeData, {String text}) {
+  Padding bodyTextWidget(ThemeData themeData, {required String text}) {
     return Padding(
               padding: Level1.sidePad,
               child: Text(text, 

@@ -8,11 +8,11 @@ import 'package:healthensuite/models/icon_button.dart';
 
 class SleepReport extends StatefulWidget {
 
-  final Function onMenuTap;
+  final Function? onMenuTap;
   static final String title = 'Sleep Report';
   static final sidePad = EdgeInsets.symmetric(horizontal: 18);
 
-  const SleepReport({Key key, this.onMenuTap}) : super(key: key);
+  const SleepReport({Key? key, this.onMenuTap}) : super(key: key);
 
   @override
   _SleepReportState createState() => _SleepReportState();
@@ -20,7 +20,7 @@ class SleepReport extends StatefulWidget {
 
 class _SleepReportState extends State<SleepReport> {
 
-    DateTimeRange dateRgText;
+    DateTimeRange? dateRgText;
     DateTime firstDate = DateTime(2021);
     DateTime lastDate = DateTime(2030);
 
@@ -127,7 +127,7 @@ class _SleepReportState extends State<SleepReport> {
             ];
   }
 
-  DataRow rowWidget(ThemeData themeData, {String desc, String value}) {
+  DataRow rowWidget(ThemeData themeData, {required String desc, required String value}) {
     return DataRow(
             cells: [
               DataCell(
@@ -175,8 +175,8 @@ class _SleepReportState extends State<SleepReport> {
 
 
   getFormValue(GlobalKey<FormBuilderState> key){
-        if(key.currentState.saveAndValidate()){
-          dateRgText = key.currentState.fields["dateRange"].value;
+        if(key.currentState!.saveAndValidate()){
+          dateRgText = key.currentState!.fields["dateRange"]!.value;
           //key.currentState.fields["dateRange"].didChange(dateRgText);
           print("Date Range value: $dateRgText");
         }

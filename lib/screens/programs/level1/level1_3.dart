@@ -49,8 +49,8 @@ class _Level1of3State extends State<Level1of3> {
                        padding: Level1of3.sidePad,
                        child: Image.asset('assets/images/causesInsomnia-img.jpg'),
                      ),
-                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet8"]),
-                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet9"]),
+                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet8"]!),
+                     bodyTextWidget(themeData, text: LEVEL1_DATA["bullet9"]!),
 
                    ],
                 ),
@@ -123,14 +123,14 @@ class _Level1of3State extends State<Level1of3> {
   //             );
   // }
 
-  MaterialButton navIconButton(BuildContext context, {String buttonText, Function buttonActon}){
+  MaterialButton navIconButton(BuildContext context, {required String buttonText, Function? buttonActon}){
     return  MaterialButton(
               child: Text(buttonText, style: TextStyle(color: appItemColorBlue, fontWeight: FontWeight.w700),),
-              onPressed: buttonActon,
+              onPressed: buttonActon as void Function()?,
             );
   }
 
-   Padding sectionTitleWidget(ThemeData themeData, {String text, TextStyle textStyle} ) {
+   Padding sectionTitleWidget(ThemeData themeData, {required String text, TextStyle? textStyle} ) {
      return Padding(
                 padding: Level1of3.sidePad,
                 child: Text(text,
@@ -139,7 +139,7 @@ class _Level1of3State extends State<Level1of3> {
               );
   }
 
-  Padding bodyTextWidget(ThemeData themeData, {String text}) {
+  Padding bodyTextWidget(ThemeData themeData, {required String text}) {
     return Padding(
               padding: Level1of3.sidePad,
               child: Text(text, 

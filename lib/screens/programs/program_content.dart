@@ -6,11 +6,11 @@ import 'package:healthensuite/screens/programs/level1/level_1.dart';
 
 class ProgramContent extends StatefulWidget{
 
-  final Function onMenuTap;
+  final Function? onMenuTap;
    static final String title = 'Program Content';
    static final sidePad = EdgeInsets.symmetric(horizontal: 18);
 
-  const ProgramContent({Key key, this.onMenuTap}) : super(key: key);
+  const ProgramContent({Key? key, this.onMenuTap}) : super(key: key);
 
   @override
   _ProgramContentState createState() => _ProgramContentState();
@@ -84,12 +84,12 @@ class _ProgramContentState extends State<ProgramContent> {
           );
    }
 
-   MaterialButton levelButtonWidget({String topic, Function action}) {
+   MaterialButton levelButtonWidget({required String topic, Function? action}) {
      return MaterialButton(
                   child: Text(topic, 
                     style: TextStyle(color: appBackgroundColor, fontWeight: FontWeight.w700),
                   ),
-                  onPressed: action
+                  onPressed: action as void Function()?
                 );
    }
 
@@ -130,7 +130,7 @@ class _ProgramContentState extends State<ProgramContent> {
           );
    }
 
-   Padding sectionTitleWidget(ThemeData themeData, {String text}) {
+   Padding sectionTitleWidget(ThemeData themeData, {required String text}) {
      return Padding(
                   padding: ProgramContent.sidePad,
                   child: Text(text,

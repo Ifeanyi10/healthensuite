@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TextSection extends StatelessWidget{
-  final String myText;
-  final double lPad;
-  final double tPad;
+  final String? myText;
+  final double? lPad;
+  final double? tPad;
   final double rPad; //already declared
   final double bPad; //already declared
   final double fontSize; //already declared
@@ -20,8 +20,8 @@ class TextSection extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(lPad, tPad, rPad, bPad),
-      child: Text(myText,
+      padding: EdgeInsets.fromLTRB(lPad!, tPad!, rPad, bPad),
+      child: Text(myText!,
           style: TextStyle(
               fontSize: fontSize, 
               fontWeight: fontWeight, 

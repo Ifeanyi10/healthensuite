@@ -5,10 +5,10 @@ import 'package:healthensuite/utilities/drawer_navigation.dart';
 
 class PsychoEducation extends StatelessWidget {
 
-  final Function onMenuTap;
+  final Function? onMenuTap;
   static final String title = 'Psychoeducation';
 
-  const PsychoEducation({Key key, this.onMenuTap}) : super(key: key);
+  const PsychoEducation({Key? key, this.onMenuTap}) : super(key: key);
 
    @override
   Widget build(BuildContext context) {

@@ -7,11 +7,11 @@ import 'package:healthensuite/screens/sleepClock/sleep_window.dart';
 
 class SleepClock extends StatefulWidget {
 
-  final Function onMenuTap;
+  final Function? onMenuTap;
   static final String title = 'Sleep Clock';
   static final sidePad = EdgeInsets.symmetric(horizontal: 18);
 
-  const SleepClock({Key key, this.onMenuTap}) : super(key: key);
+  const SleepClock({Key? key, this.onMenuTap}) : super(key: key);
 
   @override
   _SleepClockState createState() => _SleepClockState();
@@ -68,7 +68,7 @@ class _SleepClockState extends State<SleepClock> {
     );
   }
 
-  Padding tableTitle(ThemeData themeData, {String text}) {
+  Padding tableTitle(ThemeData themeData, {required String text}) {
     return Padding(
             padding: SleepClock.sidePad,
             child: Text(text, style: themeData.textTheme.headline4,),
@@ -115,7 +115,7 @@ class _SleepClockState extends State<SleepClock> {
             ];
   }
 
-  DataRow rowWidget(ThemeData themeData, {String desc, String value}) {
+  DataRow rowWidget(ThemeData themeData, {required String desc, required String value}) {
     return DataRow(
             cells: [
               DataCell(
