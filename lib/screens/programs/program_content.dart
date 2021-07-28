@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:healthensuite/utilities/drawer_navigation.dart';
 import 'package:healthensuite/utilities/constants.dart';
-import 'package:healthensuite/screens/programs/level_1.dart';
+import 'package:healthensuite/screens/programs/level1/level_1.dart';
 
 
 class ProgramContent extends StatefulWidget{
