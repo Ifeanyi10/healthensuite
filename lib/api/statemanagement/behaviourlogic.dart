@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:healthensuite/api/networkmodels/medicationsPODO.dart';
 import 'package:healthensuite/api/networkmodels/sleepDiaryPODO.dart';
 import 'package:healthensuite/api/networkmodels/patientProfilePodo.dart';
 import 'package:healthensuite/screens/sleepDiary/sleep_diary.dart';
@@ -8,7 +9,7 @@ import 'package:intl/intl.dart';
 class Workflow{
 
 
-  SleepDiariesPODO getSleepDiary(List<SleepDiariesPODO>? sleepdiaries, [bool todaySleepDiary = false, bool yesterdaySleepDiary = false]){
+  SleepDiariesPODO getSleepDiary(List<SleepDiariesPODO>? sleepdiaries, {bool todaySleepDiary = false, bool yesterdaySleepDiary = false}){
     final now = DateTime.now();
     final dummy = DateTime(now.year, now.month, now.day - 10);
     SleepDiariesPODO sleepDiariesPODO = SleepDiariesPODO();
@@ -73,4 +74,15 @@ class Workflow{
     }
   }
 
+  Medications? getMedications(List<Medications>? meds, {bool isfirstmedication = false, bool isSecondmedication = false}) {
+    if(meds != null && meds.length > 0){
+      if(isfirstmedication){
+        return meds[0];
+      }else if(isSecondmedication){
+        if(meds.length > 1){
+          return meds[1];
+        }
+      }
+    }
+  }
 }

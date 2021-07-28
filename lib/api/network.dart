@@ -3,6 +3,7 @@ import 'package:healthensuite/api/statemanagement/diskstorage.dart';
 import 'package:http/http.dart' as http;
 import 'networkUtilities.dart';
 import 'networkmodels/loginPodo.dart';
+import 'networkmodels/otherMedicationsPODO.dart';
 import 'networkmodels/sleepDiaryPODO.dart';
 import 'networkmodels/patientProfilePodo.dart';
 
@@ -59,11 +60,26 @@ class ApiAccess {
 
   Future<SleepDiariesPODO> saveSleepDiaries(
       {required SleepDiariesPODO sleepDiary}) async {
-    print(" ID :  ${sleepDiary.id}");
-    print("Date Created : ${sleepDiary.dateCreated}");
-    print("Other Things : ${sleepDiary.otherThings}");
-    String? token;
 
+    // A TEST GROUND
+    List<OtherMedicationsEntity>? testMeds = sleepDiary.getOthermeds();
+    if(testMeds != null){
+      print("Network_test med is not null");
+      if(testMeds.isNotEmpty){
+        print("Network_test med is not Empty");
+        testMeds.forEach((element) {
+          print("Network_Test Med Name : ${element.medicationName} ");
+          print("Network_Test Med Amount : ${element.amount} ");
+        });
+      }else{
+        print("Network_test med is Empty");
+      }
+    }else{
+      print("Network_test med is null");
+    }
+    // END OF TEST GROUND
+
+    String? token;
     Future<String?> tk = Localstorage().getString(key_login_token);
     await tk.then((value) => {token = value!});
     final response = await http.post(Uri.parse(save_sleepdiary_url),
@@ -84,7 +100,11 @@ class ApiAccess {
           "sleepQuality": sleepDiary.sleepQuality,
           "otherThings": sleepDiary.otherThings,
           // "medications": [],
-          // "othermedications": [],
+          "othermedications" : sleepDiary.getOthermeds(),
+          // "othermedications": [{
+          //   "medicationName": sleepDiary.getOthermeds()!.elementAt(0).medicationName,
+          //   "amount": sleepDiary.getOthermeds()!.elementAt(0).amount
+          // }],
           "date_Created": sleepDiary.dateCreated
         }),
         );

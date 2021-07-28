@@ -1,5 +1,8 @@
+import 'dart:ffi';
+
 import 'package:healthensuite/api/networkmodels/medicationsPODO.dart';
 
+import 'otherMedicationsPODO.dart';
 import 'patientProfilePodo.dart';
 
 class SleepDiariesPODO {
@@ -14,7 +17,7 @@ class SleepDiariesPODO {
   String? sleepQuality;
   String? otherThings;
   List<Medications>? medications;
-  List<Medications>? othermedications;
+  List<OtherMedicationsEntity>? othermedications;
   String? dateCreated;
 
   SleepDiariesPODO(
@@ -38,6 +41,7 @@ class SleepDiariesPODO {
     bedTime = json['bedTime'];
     // bedTime =
     // json['bedTime'] != null ? new BedTime.fromJson(json['bedTime']) : null;
+    tryTosleepTime = json['tryTosleepTime'];
     // tryTosleepTime = json['tryTosleepTime'] != null
     //     ? new BedTime.fromJson(json['tryTosleepTime'])
     //     : null;
@@ -62,10 +66,10 @@ class SleepDiariesPODO {
       });
     }
     if (json['othermedications'] != null) {
-      othermedications = <Medications>[];
+      othermedications = <OtherMedicationsEntity>[];
       //  othermedications;
       json['othermedications'].forEach((v) {
-        othermedications!.add(new Medications.fromJson(v));
+        othermedications!.add(new OtherMedicationsEntity.fromJson(v));
       });
     }
     dateCreated = json['date_Created'];
@@ -96,8 +100,17 @@ class SleepDiariesPODO {
     data['date_Created'] = this.dateCreated;
     return data;
   }
-  void updateVariable(String bedTime, String tryTosleepTime, double durationBeforesleepoff, int wakeUptimeCount,
-      double totalWakeUpduration, String finalWakeupTime, String timeLeftbed, String sleepQuality, otherThings
+  void updateVariable(String? bedTime ,
+      String? tryTosleepTime,
+      double? durationBeforesleepoff,
+      int? wakeUptimeCount,
+      double? totalWakeUpduration,
+      String? finalWakeupTime,
+      String? timeLeftbed,
+      String? sleepQuality,
+      String? otherThings,
+      List<Medications> currentMeds,
+      OtherMedicationsEntity? otherMeds
       ) {
     this.bedTime = bedTime;
     this.tryTosleepTime = tryTosleepTime;
@@ -108,5 +121,23 @@ class SleepDiariesPODO {
     this.timeLeftbed = timeLeftbed;
     this.sleepQuality = sleepQuality;
     this.otherThings = otherThings;
+
+    if(currentMeds.length > 0 ){
+      this.medications = currentMeds;
+    }
+
+    if(otherMeds != null){
+      if(othermedications != null){
+        this.othermedications!.add(otherMeds);
+      }else{
+        List<OtherMedicationsEntity> others = [];
+        others.add(otherMeds);
+        this.othermedications = others;
+        print("Other medication got here 01");
+      }
+    }
+  }
+  List<OtherMedicationsEntity>? getOthermeds(){
+    return this.othermedications;
   }
 }
