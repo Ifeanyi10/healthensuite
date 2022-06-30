@@ -128,11 +128,11 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildForgotPasswordBtn() {
     return Container(
       alignment: Alignment.centerRight,
-      child: FlatButton(
+      child: TextButton(
         onPressed: ()  {Navigator.push(
           context, new MaterialPageRoute(builder: (context) => AuthScreen())
           );},
-        padding: EdgeInsets.only(right: 0.0),
+       // padding: EdgeInsets.only(right: 0.0),
         child: Text(
           'Forgot your Password?',
           style: kLabelStyle,
@@ -221,7 +221,11 @@ class _LoginScreenState extends State<LoginScreen> {
   showAlertDialog(BuildContext context) {
 
     // set up the button
-    Widget okButton = FlatButton(
+    // Widget okButton = FlatButton(
+    //   child: Text("OK"),
+    //   onPressed: () { },
+    // );
+    Widget okButton = TextButton(
       child: Text("OK"),
       onPressed: () { },
     );

@@ -1,4 +1,4 @@
-import 'dart:ffi';
+//import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -417,14 +417,18 @@ class _SleepDiaryState extends State<SleepDiary> {
               //   labelStyle: themeData.textTheme.headline4,
               // ),
               options: [
-                FormBuilderFieldOption(
-                  child: Text("Very Poor"), value: "Very Poor",),
+                FormBuilderFieldOption(child: Text("Very Poor"), value: "Very Poor",),
+
                 FormBuilderFieldOption(child: Text("Poor"), value: "Poor",),
+
                 FormBuilderFieldOption(child: Text("Fair"), value: "Fair",),
+
                 FormBuilderFieldOption(child: Text("Good"), value: "Good",),
-                FormBuilderFieldOption(
-                  child: Text("Very Good"), value: "Very Good",),
+
+                FormBuilderFieldOption(child: Text("Very Good"), value: "Very Good",),
+
               ]
+
           ),
         ],
       ),

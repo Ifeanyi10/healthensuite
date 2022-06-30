@@ -117,4 +117,29 @@ class ApiAccess {
       throw Exception("Couldn't pull patient profile , status code ${response.statusCode} " );
     }
   }
+
+  Future<bool> saveDeviceIdentifier({String? code}) async {
+    // final baseURL = "http://10.0.2.2:8083";
+    final baseURL = "https://apiv3.healthensuite.com/";
+    final submitDeviceIdentifier = "${baseURL}/insomnia/v1/patient/deviceidentifier";
+    String token = "Ik8U21UrLySiiIxXTC7JaOi/GxICR3sWIyTcvpaqJZ0=";
+
+    final response = await http.post(
+      Uri.parse(submitDeviceIdentifier),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+      body: jsonEncode(
+          <String, String?>{"code": code}),
+    );
+
+    if (response.statusCode == 201) {
+      print("Successfully saved");
+      return true;
+    }else{
+      return false;
+    }
+  }
 }

@@ -49,16 +49,26 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget _buildSignInInsteadBtn() {
     return Container(
       alignment: Alignment.centerRight,
-      child: FlatButton(
-        onPressed: ()  {Navigator.push(
-          context, new MaterialPageRoute(builder: (context) => LoginScreen())
-          );},
-        padding: EdgeInsets.only(right: 0.0),
-        child: Text(
-          'Sign in instead',
-          style: kLabelStyle,
-        ),
+      child: TextButton(
+          onPressed: ()  {Navigator.push(
+            context, new MaterialPageRoute(builder: (context) => LoginScreen())
+            );},
+        //  padding: EdgeInsets.only(right: 0.0),
+          child: Text(
+            'Sign in instead',
+            style: kLabelStyle,
+          ),
       ),
+      // child: FlatButton(
+      //   onPressed: ()  {Navigator.push(
+      //     context, new MaterialPageRoute(builder: (context) => LoginScreen())
+      //     );},
+      //   padding: EdgeInsets.only(right: 0.0),
+      //   child: Text(
+      //     'Sign in instead',
+      //     style: kLabelStyle,
+      //   ),
+      // ),
     );
   }
 
